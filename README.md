@@ -1,6 +1,6 @@
 # Performance Testing Parsec Versus Steam-In-Home-Streaming + VPN Over The WAN
 
-I created this repo to give you insight into the functions and data used to generate the graphs we used in our blog post describing the performance of [Parsec](https://parsec.tv/) versus Steam-in-home-streaming + Hamachi while connecting to a cloud server hosted on AWS. The AWS server was running Windows Server 2016. We used a g2.2xlarge. At Parsec, we really admire this Steam-in-home-streaming + VPN set up. It's what inspired us to build our software. A lot of credit belongs to Larry Gadea who wrote the [original post](https://lg.io/2015/07/05/revised-and-much-faster-run-your-own-highend-cloud-gaming-service-on-ec2.html) inspiring [our technology](https://blog.parsec.tv/description-of-parsec-technology-b2738dcc3842).
+I created this repo to give you insight into the functions and data used to generate the graphs we used in our blog post (will be published soon) describing the performance of [Parsec](https://parsec.tv/) versus Steam-in-home-streaming + Hamachi while connecting to a cloud server hosted on AWS. The AWS server was running Windows Server 2016. We used a g2.2xlarge. At Parsec, we really admire this Steam-in-home-streaming + VPN set up. It's what inspired us to build our software. A lot of credit belongs to Larry Gadea who wrote the [original post](https://lg.io/2015/07/05/revised-and-much-faster-run-your-own-highend-cloud-gaming-service-on-ec2.html) inspiring [our technology](https://blog.parsec.tv/description-of-parsec-technology-b2738dcc3842).
 
 The [g2.2xlarge](https://aws.amazon.com/ec2/instance-types/) features:
 * High Frequency Intel Xeon E5-2670 (Sandy Bridge) Processors
@@ -17,7 +17,7 @@ A note about the code:
 
 It has been our goal to lower latency as much as possible without sacraficing frame rates. At times, this causes us to lower video quality based on network capacity, but we always aim to maintain 60 FPS no matter what the networking conditions. We even built our own [networking protocol](https://blog.parsec.tv/a-primer-on-building-udp-networking-protocols-how-we-deliver-low-latency-cloud-gaming-1987806feb62) to make this possible.
 
-The results demonstrate that under adverse conditions and normal networking conditions, Parsec is much more likely to maintain 60 FPS than the Steam + VPN solution. Using a tool called [Clumsy](https://jagt.github.io/clumsy/), we simulated networking conditions where there was 3% loss and then another scenario with 50% out of order packets. 
+The results demonstrate that under adverse conditions and normal networking conditions, Parsec is much more likely to maintain 60 FPS than the Steam + VPN solution. Using a tool called [Clumsy](https://jagt.github.io/clumsy/), we simulated networking conditions where there was 3% loss and then another scenario with 50% out of order packets. The closer you a frame is to 16.67ms, the closer it is to hitting 60 FPS. In all three graphs, the density plot demonstrates you're much more likely to receive your next frame in 16.67ms using Parsec versus Steam-in-home-streaming + VPN. 
 
 ![alt text](https://github.com/parsec-cloud/steam_parsec_test/blob/master/graphs/No%20Change%20To%20Internetplatform_density.jpg "Normal Internet")
 
