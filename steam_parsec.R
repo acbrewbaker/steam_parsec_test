@@ -9,25 +9,19 @@ library('stringr')
 library('extrafont')
 library('ggthemes')
 
-file_location <- '~/Dropbox (Personal)/Personal/Business Ideas/Parsec/Data Posts/performance/branded_graphs/'
+#Add your file location for the graphs
+file_location <- 
+
+#height and width of graphs
 image_height <- 600
 image_width <- 1000
 
 
 
 graph_colors <- c("#1BB9EC","#0b1628","#7ed321","#E7AC28","#569117","#666666","#3A65E5","#B548EF","#bf2218","#CF2256","#c7c116")
-##outlier function
-check_outlier <- function(v, coef=1.65){
-  quantiles <- quantile(v, probs=c(0.25,0.75))
-  IQR <- quantiles[2]-quantiles[1]
-  res <- v < (quantiles[1]-coef*IQR) | v > (quantiles[2]+coef*IQR)
-  return(res)
-}
 
-# reordering the values in a table to make graphing better
-reorder_size <- function(x) {
-  factor(x, levels = names(sort(table(x))))
-}
+
+
 
 #Adding footnote to graphs
 makeFootnote <- function(footnoteText =
@@ -59,8 +53,11 @@ clean_data <- function(data){
   return(data)
 }
 
+
+#Set your working directory
+setwd()
+
 #parsing CSV files with original FRAPS data
-setwd('~/Dropbox (Personal)/Personal/Business Ideas/Parsec/Data Posts/performance')
 parsec_grid_simple <- read.csv('grid_simple_parsec.csv', header=TRUE, sep=',', strip.white=TRUE, na.strings="", stringsAsFactors=FALSE)
 parsec_grid_three <- read.csv('grid_3_loss_parsec.csv', header=TRUE, sep=',', strip.white=TRUE, na.strings="", stringsAsFactors=FALSE)
 parsec_grid_fifty <- read.csv('grid_50_oo_parsec.csv', header=TRUE, sep=',', strip.white=TRUE, na.strings="", stringsAsFactors=FALSE)
