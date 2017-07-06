@@ -8,7 +8,7 @@ The [g2.2xlarge](https://aws.amazon.com/ec2/instance-types/) features:
 
 The data was produced using [FRAPS](http://www.fraps.com/) connecting to the AWS instance with a Windows 10 client with a GTX 1070 and Intel 6700k. This machine definitely wouldn't need to use a cloud server to play games ;). The client has a 1Gbps fiber internet connection and is connected via an ethernet cable. 
 
-The tests were done playing GRID, Just Cause 3, and Tomb Raider 2013. The AWS K520 card really had a hard time keeping up with Just Cause 3, but the data is included. There are some graphs with the data excluded too.
+The tests were done playing GRID, Just Cause 3, and Tomb Raider 2013. All games were run in Ultra Low to prevent conflating issues with the GPU and issues with the streaming tools. For GRID, we tested while completing the same track of a race for 1 minute under each scenario. On Tomb Raider 2013, we used the benchmark feature. The AWS K520 card really had a hard time keeping up with Just Cause 3, but the data is included. There are some graphs with the data excluded too.
 
 A note about the code:
 * I'm an R novice. Please forgive me if the code is not well structured or uses unnecessary steps or just isn't good. I tried my best.
