@@ -1,6 +1,6 @@
-# steam_parsec_test
+# Performance Testing Parsec Versus Steam-In-Home-Streaming + VPN Over The WAN
 
-I created this repo to give you insight into the functions and data used to generate the graphs we used in our blog post describing the performance of Parsec versus Steam-in-home-streaming + Hamachi while connecting to a cloud server hosted on AWS. The AWS server was running Windows Server 2016. We used a g2.2xlarge. 
+I created this repo to give you insight into the functions and data used to generate the graphs we used in our blog post describing the performance of [Parsec](https://parsec.tv/) versus Steam-in-home-streaming + Hamachi while connecting to a cloud server hosted on AWS. The AWS server was running Windows Server 2016. We used a g2.2xlarge. At Parsec, we really admire this Steam-in-home-streaming + VPN set up. It's what inspired us to build our software. A lot of credit belongs to Larry Gadea who wrote the [original post](https://lg.io/2015/07/05/revised-and-much-faster-run-your-own-highend-cloud-gaming-service-on-ec2.html) inspiring [our technology](https://blog.parsec.tv/description-of-parsec-technology-b2738dcc3842).
 
 The [g2.2xlarge](https://aws.amazon.com/ec2/instance-types/) features:
 * High Frequency Intel Xeon E5-2670 (Sandy Bridge) Processors
