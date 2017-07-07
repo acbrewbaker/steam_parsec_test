@@ -15,7 +15,7 @@ A note about the code:
   * That being said, since I am an R novice, please let me know if there are logical errors in this code. I'm aiming to be transparent with my methodology and the data we used to generate a comparison with Steam-in-home-streaming + Hamachi versus Parsec.
 
 
-It has been our goal to lower latency as much as possible without sacraficing frame rates. At times, this causes us to lower video quality based on network capacity, but we always aim to maintain 60 FPS no matter what the networking conditions. We even built our own [networking protocol](https://blog.parsec.tv/a-primer-on-building-udp-networking-protocols-how-we-deliver-low-latency-cloud-gaming-1987806feb62) to make this possible.
+It has been our goal to lower latency as much as possible without sacrificing frame rates. At times, this causes us to lower video quality based on network capacity, but we always aim to maintain 60 FPS no matter what the networking conditions. We even built our own [networking protocol](https://blog.parsec.tv/a-primer-on-building-udp-networking-protocols-how-we-deliver-low-latency-cloud-gaming-1987806feb62) to make this possible.
 
 The results demonstrate that under adverse conditions and normal networking conditions, Parsec is much more likely to maintain 60 FPS than the Steam + VPN solution. Using a tool called [Clumsy](https://jagt.github.io/clumsy/), we simulated networking conditions where there was 3% loss and then another scenario with 50% out of order packets. The closer you a frame is to 16.67ms, the closer it is to hitting 60 FPS. In all three graphs, the density plot demonstrates you're much more likely to receive your next frame in 16.67ms using Parsec versus Steam-in-home-streaming + VPN. 
 
