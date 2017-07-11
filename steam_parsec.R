@@ -9,8 +9,11 @@ library('stringr')
 library('extrafont')
 library('ggthemes')
 
+
+
 #Add your file location for the graphs
-file_location <- 
+FILE_LOCATION <- ''
+WORKING_DIRECTORY <- ''
 
 #height and width of graphs
 image_height <- 600
@@ -47,7 +50,11 @@ clean_data <- function(data){
   data[,expected_time := 16.66667 + shift(frame_time)]
   data$miss <- data$frame_time - data$expected_time
   data$actual_time <- data$miss + 16.66667
-  data$Platform[data$Platform == "Steam"] <- "Steam + VPN"
+  if (data$Scenario == "Local"){
+    data$Platform[data$Platform == "Steam"] <- "Steam"
+  } else {
+    data$Platform[data$Platform == "Steam"] <- "Steam + VPN"
+  }
   data$Scenario[data$Scenario == "Simple"] <- "No Change To Internet"
   data$Scenario[data$Scenario == "Fifty Percent Out Of Order"] <- "Fifty Percent Out Of Order Packets"
   return(data)
@@ -55,7 +62,7 @@ clean_data <- function(data){
 
 
 #Set your working directory
-setwd()
+setwd(WORKING_DIRECTORY)
 
 #parsing CSV files with original FRAPS data
 parsec_grid_simple <- read.csv('grid_simple_parsec.csv', header=TRUE, sep=',', strip.white=TRUE, na.strings="", stringsAsFactors=FALSE)
@@ -73,6 +80,12 @@ steam_tr_fifty <- read.csv('tomb_raider_50_oo_steam.csv', header=TRUE, sep=',', 
 parsec_jc_simple <- read.csv('just_cause_simple_parsec.csv', header=TRUE, sep=',', strip.white=TRUE, na.strings="", stringsAsFactors=FALSE)
 steam_jc_simple <- read.csv('just_cause_simple_steam.csv', header=TRUE, sep=',', strip.white=TRUE, na.strings="", stringsAsFactors=FALSE)
 
+parsec_grid_local <- read.csv('Grid_local_parsec.csv', header=TRUE, sep=',', strip.white=TRUE, na.strings="", stringsAsFactors=FALSE)
+parsec_tr_local <- read.csv('tomb_raider_local_parsec.csv', header=TRUE, sep=',', strip.white=TRUE, na.strings="", stringsAsFactors=FALSE)
+steam_grid_local <- read.csv('Grid_local_steam.csv', header=TRUE, sep=',', strip.white=TRUE, na.strings="", stringsAsFactors=FALSE)
+steam_tr_local <- read.csv('tomb_raider_local_steam.csv', header=TRUE, sep=',', strip.white=TRUE, na.strings="", stringsAsFactors=FALSE)
+
+
 #cleaning original data
 parsec_grid_simple <- clean_data(parsec_grid_simple) 
 parsec_grid_three <- clean_data(parsec_grid_three)
@@ -89,6 +102,12 @@ steam_tr_fifty <- clean_data(steam_tr_fifty)
 parsec_jc_simple <- clean_data(parsec_jc_simple)
 steam_jc_simple <- clean_data(steam_jc_simple)
 
+parsec_grid_local <- clean_data(parsec_grid_local)
+parsec_tr_local <- clean_data(parsec_tr_local)
+steam_grid_local <- clean_data(steam_grid_local)
+steam_tr_local <- clean_data(steam_tr_local)
+
+
 #combining cleaned data into one datatable
 data <- do.call("rbind", list(
   parsec_grid_simple,
@@ -104,7 +123,11 @@ data <- do.call("rbind", list(
   steam_tr_three,
   steam_tr_fifty,
   parsec_jc_simple,
-  steam_jc_simple
+  steam_jc_simple,
+  parsec_grid_local,
+  parsec_tr_local,
+  steam_grid_local,
+  steam_tr_local
 ))
 
 
@@ -116,6 +139,7 @@ data <- do.call("rbind", list(
 simple <- subset(data, data$Scenario=='No Change To Internet')
 three <- subset(data, data$Scenario=='Three Percent Loss')
 fifty <- subset(data, data$Scenario=='Fifty Percent Out Of Order Packets')
+local <- subset(data, data$Scenario=='Local')
 
 #########games
 grid_game <- subset(data, data$Game=='GRID')
@@ -130,7 +154,7 @@ steam <- subset(data, data$Platform=='Steam')
 #Graphs
 #########Platform Histogram
 
-scenarios <- list("No Change To Internet","Three Percent Loss","Fifty Percent Out Of Order Packets") 
+scenarios <- list("No Change To Internet","Three Percent Loss","Fifty Percent Out Of Order Packets", "Local") 
 
 for (i in scenarios){
   dataset <- subset(data, data$Scenario == i)  
@@ -145,7 +169,7 @@ for (i in scenarios){
       panel.background=element_rect(colour="#f7f7f7",fill="#f7f7f7"),
       legend.background=element_rect(colour="#f7f7f7",fill="#f7f7f7"))+scale_fill_manual(values=graph_colors)
     p <- p+ labs(title = paste("Frames Delivered At 16.67ms (60 FPS) With",i, sep=" "), x = 'Milliseconds After Last Frame', y = 'Likelihood Frame Captured At 60 FPS')
-    jpeg(file=paste(file_location,i,"platform_density.jpg", sep=""), width=image_width, height=image_height)
+    jpeg(file=paste(FILE_LOCATION,i,"platform_density.jpg", sep=""), width=image_width, height=image_height)
     print(p)
     makeFootnote("Credit: Parsec.tv", color = "#0b1628")
     dev.off()
@@ -163,7 +187,7 @@ for (i in scenarios){
       panel.background=element_rect(colour="#f7f7f7",fill="#f7f7f7"),
       legend.background=element_rect(colour="#f7f7f7",fill="#f7f7f7"))+scale_colour_manual(values=graph_colors)
     d <- d+ labs(title = paste("Milliseconds Between Each Frame With",i,sep=" "), x = 'Frame', y = 'Milliseconds')
-    jpeg(file=paste(file_location,i,"_scenario_scatter.jpg", sep=""), width=image_width, height=image_height)
+    jpeg(file=paste(FILE_LOCATION,i,"_scenario_scatter.jpg", sep=""), width=image_width, height=image_height)
     print(d)
     makeFootnote("Credit: Parsec.tv", color = "black")
     dev.off()
@@ -190,7 +214,7 @@ for (i in games){
       panel.background=element_rect(colour="#f7f7f7",fill="#f7f7f7"),
       legend.background=element_rect(colour="#f7f7f7",fill="#f7f7f7"))+scale_fill_manual(values=graph_colors)
     p <- p+ labs(title = paste("Frames Delivered At 16.67ms (60 FPS) Playing",i,"With",s, sep=" "), x = 'Milliseconds After Last Frame', y = 'Likelihood Frame Captured At 60 FPS')
-    jpeg(file=paste(file_location,i,"platform_density_",s,".jpg", sep=""), width=image_width, height=image_height)
+    jpeg(file=paste(FILE_LOCATION,i,"platform_density_",s,".jpg", sep=""), width=image_width, height=image_height)
     print(p)
     makeFootnote("Credit: Parsec.tv", color = "#0b1628")
     dev.off()
